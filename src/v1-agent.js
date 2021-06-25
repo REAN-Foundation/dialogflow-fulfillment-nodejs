@@ -220,11 +220,14 @@ class V1Agent {
 
     if (!responseJson) {
       error(`No responses defined for platform: ${requestSource}`);
-      this.agent.response_.status(ERROR_HTTP_STATUS_CODE).send(`No responses defined for platform: ${requestSource}`);
+      // this.agent.response_.status(ERROR_HTTP_STATUS_CODE).send(`No responses defined for platform: ${requestSource}`);
+      throw Error(`No responses defined for platform: ${requestSource}`);
+
     } else {
       responseJson.contextOut = this.agent.context.getV1OutputContextsArray();
       debug('Response to Dialogflow: ' + JSON.stringify(responseJson));
-      this.agent.response_.json(responseJson);
+      // this.agent.response_.json(responseJson);
+      return responseJson;
     }
   }
 

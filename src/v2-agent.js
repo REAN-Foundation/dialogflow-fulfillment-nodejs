@@ -236,6 +236,7 @@ class V2Agent {
    *
    * @param {string} requestSource string indicating the source of the initial request
    * @private
+   * @return string
    */
   sendResponses_(requestSource) {
     let responseJson = this.responseJson_;
@@ -247,14 +248,16 @@ class V2Agent {
 
     if (!responseJson) {
       error(`No responses defined for platform: ${requestSource}`);
-      this.agent.response_.status(ERROR_HTTP_STATUS_CODE).send(`No responses defined for platform: ${requestSource}`);
+      // this.agent.response_.status(ERROR_HTTP_STATUS_CODE).send(`No responses defined for platform: ${requestSource}`);
+      throw Error(`No responses defined for platform: ${requestSource}`);
     } else {
       responseJson.outputContexts = this.agent.context.getV2OutputContextsArray();
       if (this.agent.endConversation_) {
         responseJson.triggerEndOfConversation = this.agent.endConversation_;
       }
       debug('Response to Dialogflow: ' + JSON.stringify(responseJson));
-      this.agent.response_.json(responseJson);
+      // this.agent.response_.json(responseJson);
+      return responseJson;
     }
   }
 

@@ -66,10 +66,11 @@ class WebhookClient {
 
     /**
      * The Express HTTP response the endpoint will return to Assistant.
+     * Removed by Dr.Rakesh Garg
      * @private
      * @type {Object}
      */
-    this.response_ = options.response;
+    // this.response_ = options.response;
 
     /**
      * The agent version (v1 or v2) based on Dialogflow webhook request
@@ -301,9 +302,10 @@ class WebhookClient {
 
     if (!(handler instanceof Map)) {
       error('handleRequest argument must be a function or map of intent names to functions');
-      this.response_
-        .status(RESPONSE_CODE_BAD_REQUEST)
-        .status('handleRequest argument must be a function or map of intent names to functions');
+      // throw Error('handleRequest argument must be a function or map of intent names to functions');
+      // this.response_
+      //   .status(RESPONSE_CODE_BAD_REQUEST)
+      //   .status('handleRequest argument must be a function or map of intent names to functions');
       return Promise.reject( new Error(
         'handleRequest argument must be a function or map of intent names to functions'
       ));
@@ -321,9 +323,9 @@ class WebhookClient {
       return promise.then(() => this.send_());
     } else {
       error('No handler for requested intent');
-      this.response_
-        .status(RESPONSE_CODE_BAD_REQUEST)
-        .status('No handler for requested intent');
+      // this.response_
+      //   .status(RESPONSE_CODE_BAD_REQUEST)
+      //   .status('No handler for requested intent');
       return Promise.reject(new Error('No handler for requested intent'));
     }
   }
@@ -471,7 +473,7 @@ class WebhookClient {
    * Sends a response back to a Dialogflow fulfillment webhook request
    *
    * @param {string[]|RichResponse[]} response additional responses to send
-   * @return {void}
+   * @return {string}
    * @private
    */
   send_() {
@@ -502,7 +504,7 @@ class WebhookClient {
     if (payload && !payload.sendAsMessage) {
       this.client.addPayloadResponse_(payload, requestSource);
     }
-    this.client.sendResponses_(requestSource);
+    return this.client.sendResponses_(requestSource);
   }
 
   /**
