@@ -53,9 +53,9 @@ class WebhookClient {
     if (!options.request) {
       throw new Error('Request can NOT be empty.');
     }
-    if (!options.response) {
-      throw new Error('Response can NOT be empty.');
-    }
+    // if (!options.response) {
+    //   throw new Error('Response can NOT be empty.');
+    // }
 
     /**
      * The Express HTTP request that the endpoint receives from the Assistant.
